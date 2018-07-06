@@ -14,6 +14,7 @@ def random_row(board):
 def random_col(board):
   return randint(1, len(board[0])-1)
 
+
 # wrote this initially as a check that player guessed a letter/number combination that could be on the board at its largest size, if not simply have them guess again without losing a turn. It returns their guess column as both an integer and a letter in a string and the guess row.
 def player_guess():
   y=0

@@ -117,205 +117,261 @@ def alive_ship(large):
   board[guess_row][guess_col] = "S"
   return large[2:]
 
-number_of_rows=1
+# asks player name
+def ask_name():
+  player1=""
+  player2=""
+  player1=input("What is your name player 1?")
+  if player_num==2:
+    player2=input("What is your name player 2?")
+    while player1==player2:
+      player2=input("That name is already taken, try a different one.")
+    if player2=="Mr. Hankey" or player1=="Mr. Hankey":
+      player2="Mr. Garrison"
+      print ("Great I'll call you Mr. Garrison.")
+    else:
+      player2="Mr. Hankey"
+      print ("Great I'll just call you Mr. Hankey.")
+  return player1, player2
+
+# asks if they want to restart battleship     
+def play_again_q():
+  joke = str(input("Care to play again?(y/n)?"))
+  if joke.lower() == "y":
+    "nothing"
+    print ("Good luck!")
+    return True
+  elif joke.lower() == "n":
+    if player_num==2:
+      print ("Final score:")
+      print ("Player1: " + str(perm_player1_count) + " ships sunk")
+      print ("Player2: " + str(perm_player2_count) + " ships sunk")
+    print ("Cya")
+    return False
+  else:
+    print ("No wonder you lost.")
+    return False
+
+perm_player1_count=0
+perm_player2_count=0
+play_again=True
+already_played=False
+# put the entire code in a while loop so they can play again
+while play_again==True:
+  number_of_rows=1
 # simply asks user how many rows they want the battleship board to have,
 # and keeps asking until it receives a valid input.
-while number_of_rows <2 or number_of_rows >9:  
-  welcome="how many rows/columns(2-9)?(must be a square)"
-  number_of_rows= integer_check(welcome)
-  
-board= []
-board_size= [" ","A","B","C","D","E","F","G","H","I" ]
+  def num_of_rows():
+    number_of_rows=1
+    while number_of_rows <2 or number_of_rows >9:  
+      welcome="how many rows/columns(2-9)?(must be a square)"
+      number_of_rows= integer_check(welcome)
+    return number_of_rows
+  number_of_rows=num_of_rows()
+
+  board= []
+  def board_setup():
+    board_size= [" ","A","B","C","D","E","F","G","H","I" ]
 # shrinks the board based on how many rows the user wanted
-board_size[number_of_rows+1:10]=[]
-board=[board_size]
-for x in range(1, number_of_rows+1):
-  board.append([str(x)]+["O"] * number_of_rows)
+    board_size[number_of_rows+1:10]=[]
+    board=[board_size]
+    for x in range(1, number_of_rows+1):
+      board.append([str(x)]+["O"] * number_of_rows)
+    return board
+  board=board_setup()
 
 # prints the board fairly neatly
-def print_board(board):
-  for row in board:
-    print (" ".join(row))
+  def print_board(board):
+    for row in board:
+      print (" ".join(row))
 
-print_board(board)
+  print_board(board)
 # a lot of variables I have to make sure exist before they're called upon..
 # is it normal to have this many? or is this a sign I need more functions?? classes?? help.
-check=""
-ship_col=0
-ship_row=0
-turn=0
-player1_turn=0
-player2_turn=100
-guess_row=3
-guess_col=3
-temp=[3,3,""]
-ship_quantity=["",1]
-guess_statement="How many guesses per player would you like?(integer)"
+  check=""
+  ship_col=0
+  ship_row=0
+  turn=0
+  player1_turn=0
+  player2_turn=100
+  guess_row=3
+  guess_col=3
+  store_guess=[3,3,""]
+  ship_quantity=["",1]
+  guess_statement="How many guesses per player would you like?(integer)"
 # players enter how many guesses they'd like.
-guess_num= integer_check(guess_statement)
-player1_guesses=guess_num
-player2_guesses=0
-player1_count=0
-player2_count=0
-which_player=1
+  guess_num= integer_check(guess_statement)
+  player1_guesses=guess_num
+  player2_guesses=0
+  player1_count=0
+  player2_count=0
+  which_player=1
 
-eric ="content"
+  eric ="content"
 # this is set-up for the game
-while eric != "happy":
+  while eric != "happy":
 # they say they want 0 guesses or negative guesses I just end the program,
 # my integer check will let those values pass on purpose 
-  if guess_num<=0:
-    print ("ok then you lose!")
-    break
+    if guess_num<=0:
+      print ("ok then you lose!")
+      break
 # if they choose more guesses than spots on the board program ends    
-  if guess_num>= number_of_rows**number_of_rows-1:
-    print ("You win! Cheater.")
-    guess_num=0
-    break
-
-  player_statement="1 or 2 players?(integer)"
-# players input  whether there are 1 or 2 players  
-  player_num= integer_check(player_statement)
-# if they put 0 players, or negative players, program ends  
-  if player_num<=0:
-    print ("everybody wins and losses.")
-    guess_num=0
-    break
-# if they put more than 2 players program ends  
-  if player_num>2:
-    print ("L2 follow directions.")
-    guess_num=0
-    break
-# sets some values for player 2 if they exist    
-  if player_num==2:
-# checks that the game is still loseable, if not program ends.    
-    if guess_num*player_num>= number_of_rows**number_of_rows-1:
-      print ("You guys can't lose, that's no fun for me.")
+    if guess_num>= number_of_rows**number_of_rows-1:
+      print ("You win! Cheater.")
       guess_num=0
       break
-    player2_guesses=guess_num
-    player2_turn=0
+
+    player_statement="1 or 2 players?(integer)"
+# players input  whether there are 1 or 2 players 
+    if already_played==False:
+      player_num= integer_check(player_statement)
+    else:
+      player_num=2
+# if they put 0 players, or negative players, program ends  
+    if player_num<=0:
+      print ("everybody wins and losses.")
+      guess_num=0
+      break
+# if they put more than 2 players program ends  
+    if player_num>2:
+      print ("L2 follow directions.")
+      guess_num=0
+      break
+# sets some values for player 2 if they exist    
+    if player_num==2:
+# checks that the game is still loseable, if not program ends.    
+      if guess_num*player_num>= number_of_rows**number_of_rows-1:
+        print ("You guys can't lose, that's no fun for me.")
+        guess_num=0
+        break
+      player_name=ask_name()
+      player1=player_name[0]
+      player2=player_name[1]
+      player2_guesses=guess_num
+      player2_turn=0
 
 # players are asked how many ships they want here      
-  ship_quantity=how_many_ships()
-  check=check+ship_quantity[0]
-  ship=int(ship_quantity[1])
+    ship_quantity=how_many_ships()
+    check=check+ship_quantity[0]
+    ship=int(ship_quantity[1])
 # if ships value is less than 1 end the game  
-  if ship<=0:
-    print ("That's a great strategy in life, never even try.")
+    if ship<=0:
+      print ("That's a great strategy in life, never even try.")
 # if there's no way for both players to lose becuase the board is too small for the
 # guesses/ships end the game 
-  if ship>=number_of_rows**number_of_rows-guess_num*player_num:
-    print ("That was too many ships, you fail at life.")
-    ship=0
-  eric="happy"
+    if ship>=number_of_rows**number_of_rows-guess_num*player_num:
+      print ("That was too many ships, you fail at life.")
+      ship=0
+    eric="happy"
 
 # playing battleship starts
-while turn <guess_num and ship>0:
-  print (check)
+  while turn <guess_num and ship>0:
+    print (check)
 
 # if two players randomize whose turn it is and print to let them know.
-  if player_num ==2 and player1_guesses == player2_guesses:
-    which_player=randint(1,2)
-    if which_player==1:
-      print ("Player 1 ", end="")
-    else:
-      print ("Player 2 ", end="")
-  elif player_num==2 and player1_guesses>player2_guesses:
-    which_player=1
-    print ("Player 1 ", end="")
-  elif player_num==2 and player2_guesses>player1_guesses:
-    which_player=2
-    print ("Player 2 ", end="")
+    if player_num ==2 and player1_guesses == player2_guesses:
+      which_player=randint(1,2)
+      if which_player==1:
+        print (player1, end="")
+      else:
+        print (player2, end="")
+    elif player_num==2 and player1_guesses>player2_guesses:
+      which_player=1
+      print (player1, end="")
+    elif player_num==2 and player2_guesses>player1_guesses:
+      which_player=2
+      print (player2, end="")
 
 # if only one player    
-  else:
-    print ("Player 1 ", end="")
-  
-  print ("Guesses remaining:",  guess_num-turn)
+    else:
+      print (player1, end="")
+    
+    print (" guesses remaining:",  guess_num-turn)
 
 # player inputs a guess here  
-  temp = player_guess()
-  guess_row = int(temp[0])  
-  guess_col = int(temp[1])
-  col_check= str(temp[2])
-  guess_string= col_check +str(guess_row)
+    store_guess = player_guess()
+    guess_row = int(store_guess[0])  
+    guess_col = int(store_guess[1])
+    col_check= str(store_guess[2])
+    guess_string= col_check +str(guess_row)
 
 # guess is a hit,this adds "S" to the board and gives that player a point
-  if guess_string in check:
-    print ("Congratulations! You sank a battleship!")
-    board[guess_row][guess_col] = "S" 
-    print_board(board)
-    remaining_ship= sunk_ship(check,guess_string)
-    check=remaining_ship
-    ship-=1
-    print (str(ship) +" ship(s) remaining")
-    if which_player ==1:
-      player1_count+=1
-    else:
-      player2_count+=1
+    if guess_string in check:
+      print ("Congratulations! You sank a battleship!")
+      board[guess_row][guess_col] = "S" 
+      print_board(board)
+      remaining_ship= sunk_ship(check,guess_string)
+      check=remaining_ship
+      ship-=1
+      print (str(ship) +" ship(s) remaining")
+      if which_player ==1:
+        player1_count+=1
+      else:
+        player2_count+=1
 
 # guess is not a hit gives user more instructions why    
-  else:
-    if guess_row > number_of_rows or \
-      guess_col > number_of_rows:
-      print ("Oops, that's not even in the ocean.")
-    elif board[guess_row][guess_col] == "X" or \
-    board[guess_row][guess_col] == "S":
-      print( "You guessed that one already." )  
+    else:
+      if guess_row > number_of_rows or \
+        guess_col > number_of_rows:
+        print ("Oops, that's not even in the ocean.")
+      elif board[guess_row][guess_col] == "X" or \
+      board[guess_row][guess_col] == "S":
+        print( "You guessed that one already." )  
 
 # a miss is recorded on the board as "X" and that player losses a turn          
-    else:
-      print ("You missed my battleship!")
-      board[guess_row][guess_col] = "X"
-      if which_player==1:
-        player1_turn+=1
-        player1_guesses-=1
-      elif which_player==2:
-        player2_turn+=1
-        player2_guesses-=1
-      if turn<player1_turn and turn< player2_turn:
-        turn+=1
-    print_board(board)
-
-# ending of the players lose the game    
-    if (turn == guess_num):
-      print ("Game Over. ")
-      if player_num==2:
-        print ("Player 1 sunk: " + str(player1_count))
-        print ("Player 2 sunk: " + str(player2_count))
-        if player1_count==player2_count:
-          print ("nobody wins, weak.")
-        elif player1_count>player2_count:
-          print ("Player 1 wins!")
-        else:
-          print ("Player 2 wins!")
-      
-      while len(check)>0:
-        remaining_ships=alive_ship(check)
-        check=remaining_ships
+      else:
+        print ("You missed my battleship!")
+        board[guess_row][guess_col] = "X"
+        if which_player==1:
+          player1_turn+=1
+          player1_guesses-=1
+        elif which_player==2:
+          player2_turn+=1
+          player2_guesses-=1
+        if turn<player1_turn and turn< player2_turn:
+          turn+=1
       print_board(board)
 
-# just a joke since the program doesn't restart right now. is that easy to do?      
-      joke = str(input("Care to play again?(y/n)?"))
-      if joke.lower() == "y":
-        print ("Then click run again")
-      elif joke.lower() == "n":
-        print ("Cya loser")
-      else:
-        print ("No wonder you lost.")
-
+# ending of the players lose the game    
+      if (turn == guess_num):
+        print ("Game Over. ")
+        if player_num==2:
+          perm_player1_count+=player1_count
+          perm_player2_count+=player2_count
+          print (player1 +" sunk: " + str(player1_count))
+          print (player2 +" sunk: " + str(player2_count))
+          if player1_count==player2_count:
+            print ("nobody wins, weak.")
+          elif player1_count>player2_count:
+            print (player1 +" wins!")
+          else:
+            print (player2 +" wins!")
+        
+        while len(check)>0:
+          remaining_ships=alive_ship(check)
+          check=remaining_ships
+        print_board(board)
+# I do this 3 times, can I put this in a function? play_again_q() returns True or False
+        play_again=play_again_q()
+        already_played=play_again
+      
 # ending if players win the game        
   if ship==0:
     if player_num==1:
-      print ("you win!")
+      print ("you win!" +player1)
+      play_again=play_again_q()
+      already_played=play_again
     else:
-      print ("Player 1 sunk: " + str(player1_count))
-      print ("Player 2 sunk: " + str(player2_count))
+      perm_player1_count+=player1_count
+      perm_player2_count+=player2_count
+      print (player1 +" sunk: " + str(player1_count))
+      print (player2 +" sunk: " + str(player2_count))
       if player1_count==player2_count:
         print ("nobody wins, maybe chose an odd number of ships next game.")
       elif player1_count>player2_count:
-        print ("Player 1 wins!")
+        print (player1 +" wins!")
       else:
-        print ("Player 2 wins!")
+        print (player2 +" wins!")
+      play_again=play_again_q()
+      already_played=play_again
         

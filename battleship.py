@@ -237,13 +237,20 @@ while play_again==True:
       print ("L2 follow directions.")
       guess_num=0
       break
+
+# checks that the game is still loseable, if not program ends.    
+    if guess_num*player_num>= number_of_rows**number_of_rows-1:
+      print ("You guys can't lose, that's no fun for me.")
+      guess_num=0
+      break
+
+# if only one player, still need to ask their name
+    if player_num==1:
+      player_name=ask_name()
+      player1=player_name[0]
+
 # sets some values for player 2 if they exist    
     if player_num==2:
-# checks that the game is still loseable, if not program ends.    
-      if guess_num*player_num>= number_of_rows**number_of_rows-1:
-        print ("You guys can't lose, that's no fun for me.")
-        guess_num=0
-        break
       player_name=ask_name()
       player1=player_name[0]
       player2=player_name[1]

@@ -1,5 +1,4 @@
-frog=1
-def test():
-  frog=2
-test()
-print(frog)
+num = [0,0]
+y=[1,1]
+x=num+y
+print (x)

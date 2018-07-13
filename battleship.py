@@ -117,6 +117,8 @@ def alive_ship(large):
   board[guess_row][guess_col] = "S"
   return large[2:]
 
+name1=""
+name2=""
 # asks player name
 def ask_name():
   player1=""
@@ -127,8 +129,8 @@ def ask_name():
     while player1==player2:
       player2=input("That name is already taken, try a different one.")
     if player2=="Mr. Hankey" or player1=="Mr. Hankey":
-      player2="Mr. Garrison"
-      print ("Great I'll call you Mr. Garrison.")
+      player2="Cartman"
+      print ("Great I'll call you Cartman.")
     else:
       player2="Mr. Hankey"
       print ("Great I'll just call you Mr. Hankey.")
@@ -144,8 +146,8 @@ def play_again_q():
   elif joke.lower() == "n":
     if player_num==2:
       print ("Final score:")
-      print ("Player1: " + str(perm_player1_count) + " ships sunk")
-      print ("Player2: " + str(perm_player2_count) + " ships sunk")
+      print (name1+ ": " + str(perm_player1_count) + " ships sunk")
+      print (name2+ ": " + str(perm_player2_count) + " ships sunk")
     print ("Cya")
     return False
   else:
@@ -252,8 +254,8 @@ while play_again==True:
 # sets some values for player 2 if they exist    
     if player_num==2:
       player_name=ask_name()
-      player1=player_name[0]
-      player2=player_name[1]
+      name1=player_name[0]
+      name2=player_name[1]
       player2_guesses=guess_num
       player2_turn=0
 
@@ -279,19 +281,19 @@ while play_again==True:
     if player_num ==2 and player1_guesses == player2_guesses:
       which_player=randint(1,2)
       if which_player==1:
-        print (player1, end="")
+        print (name1, end="")
       else:
-        print (player2, end="")
+        print (name2, end="")
     elif player_num==2 and player1_guesses>player2_guesses:
       which_player=1
-      print (player1, end="")
+      print (name1, end="")
     elif player_num==2 and player2_guesses>player1_guesses:
       which_player=2
-      print (player2, end="")
+      print (name2, end="")
 
 # if only one player    
     else:
-      print (player1, end="")
+      print (name1, end="")
     
     print (" guesses remaining:",  guess_num-turn)
 
@@ -345,14 +347,14 @@ while play_again==True:
         if player_num==2:
           perm_player1_count+=player1_count
           perm_player2_count+=player2_count
-          print (player1 +" sunk: " + str(player1_count))
-          print (player2 +" sunk: " + str(player2_count))
+          print (name1 +" sunk: " + str(player1_count))
+          print (name2 +" sunk: " + str(player2_count))
           if player1_count==player2_count:
             print ("nobody wins, weak.")
           elif player1_count>player2_count:
-            print (player1 +" wins!")
+            print (name1 +" wins!")
           else:
-            print (player2 +" wins!")
+            print (name2 +" wins!")
         
         while len(check)>0:
           remaining_ships=alive_ship(check)
@@ -365,20 +367,20 @@ while play_again==True:
 # ending if players win the game        
   if ship==0:
     if player_num==1:
-      print ("you win!" +player1)
+      print ("you win!" +name1)
       play_again=play_again_q()
       already_played=play_again
     else:
       perm_player1_count+=player1_count
       perm_player2_count+=player2_count
-      print (player1 +" sunk: " + str(player1_count))
-      print (player2 +" sunk: " + str(player2_count))
+      print (name1 +" sunk: " + str(player1_count))
+      print (name2 +" sunk: " + str(player2_count))
       if player1_count==player2_count:
         print ("nobody wins, maybe chose an odd number of ships next game.")
       elif player1_count>player2_count:
-        print (player1 +" wins!")
+        print (name1 +" wins!")
       else:
-        print (player2 +" wins!")
+        print (name2 +" wins!")
       play_again=play_again_q()
       already_played=play_again
         

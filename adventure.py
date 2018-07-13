@@ -1,42 +1,45 @@
 #function for checking valid directional input
-def direction(user):
-    if user.lower() =="up" or user.lower() =="down" or user.lower()=="left" or user.lower()=="right":
-        return True
-    else: 
-        return False
+def direction():
+    y=0
+    while y<1:
+        x=input("what direction will you go?")
+        try:
+            if x.lower() =="up" or x.lower() =="down" or x.lower()=="left" or x.lower()=="right":
+                motion = x.lower()
+                y+=1
+                return motion
+        except (ValueError, TypeError):
+            pass
 
 #function for switching rooms
-def move():
-    while True:
-        x=input("what direction will you go?")
-        if direction(x):
-            if x.lower() =="up" and u==True:
-                return 1,0
-            elif x.lower() =="down" and d==True:
-                return -1,0
-            elif x.lower() =="left" and l==True:
-                return 0,-1
-            elif x.lower() =="right" and r==True:
-                return 0,1
-            else:
-                print("you are confused, you walked into a wall, you are not dead yet.")
-                return 0,0
+def move(motion):
+    if motion =="up" and u==True:
+        return motion
+    elif motion =="down" and d==True:
+        return motion
+    elif motion =="left" and l==True:
+        return motion
+    elif motion =="right" and r==True:
+        return motion
+    else:
+        print("you are confused, you walked into a wall, you are not dead yet. -1 Turn.")
 
 #final room 
-def final_move():
-    while True:
-        x=input("what direction will you go?")
-        if direction(x):
-            if x.lower() =="up":
-                if key=True:
-                    print ("congratulations you didn't die!")
-                else:
-                    if mini=1:
-                        print("you try to open the door. It is locked. You try to knock\
-                         it down the door by charging at it and fail. The indian laughs.")
-                    elif mini=2:
-                        print("you")
-                
+def final_move(motion):
+    if motion =="up":
+        if key==True:
+            print ("congratulations you didn't die!")
+        else:
+            if mini==1:
+                print("you try to open the door. It is locked. You try to knock\
+                    it down the door by charging at it and fail. The indian laughs.")
+            elif mini==2:
+                print("you try to open the door. It is locked. Owen Wilson laughs.")
+            else:
+                print("You try to open the door, but it is locked.")
+    else:
+        return motion
+            
 #Owen Wilson or the indian
 def cupboard():
     return(input("Do you take the indian or Owen?"))
@@ -56,10 +59,22 @@ def wardrobe():
             pass
 
 #function to change loc
-def moving(a,b):
-    y=loc[0]+a
-    x=loc[1]+b
-    return y,x
+def moving(mov):
+    y=loc[0]
+    x=loc[1]
+    if mov=="up":
+        y=loc[0]+1
+        x=loc[1]
+    elif mov=="left":
+        y=loc[0]
+        x=loc[1]-1
+    elif mov=="right":
+        y=loc[0]
+        x=loc[1]+1
+    elif mov=="down":
+        y=loc[0]-1
+        x=loc[1]
+    return (y,x)
 
 #set-up
 print("while following your soccer coach down the stairs into an underground building\
@@ -67,45 +82,99 @@ print("while following your soccer coach down the stairs into an underground bui
  You don't know where the rest of the team is. You predict you'll have enough oxygen\
  to enter 7 rooms until you pass out.")
 temp=[]
-loc=[1,5]
+hi=""
+yo=""
+global loc
+loc=(1,5)
 stuck=0
 mini=5
 key = False
+print (loc)
 
 while stuck<8:
 
 #first room
-    if loc == [1,5]:
-        u=l=r=True
+    if loc == (1,5):
+        u=True
+        l=True
+        r=True
         d=False
         stuck+=1
         print("You are in a room with white walls. There is an old receptionist desk in the\
-        middle of the room with nothing of value on it or in it. There are however three doors.\
-        One door \"up\", one door \"left\", and one door \"right\".)
-        temp=move()
-        loc=moving(temp[0],temp[1])
-    elif loc == [1,4]:
-        global mini
+ middle of the room with nothing of value on it or in it. There are however three doors.\
+ One door \"up\", one door \"left\", and one door \"right\".")
+        hi=direction()
+        yo=move(hi)
+        temp=moving(yo)
+        loc=temp
+        print (loc)
+
+    elif loc == (1,4):
         r=True
-        u=l=d=False
+        u=False
+        l=False
+        d=False
         stuck+=1
         print("You enter a room with pink walls. There is a cupboard that perks your interest.\
-        Little people appear to be fighting. You notice one of them is Owen Wilson and the other\
-         is just some indian. You don't want them to fight anymore so you take one of them. Which?")
+ Little people appear to be fighting. You notice one of them is Owen Wilson and the other\
+ is just some indian. You don't want them to fight anymore so you take one of them. Which?")
         if cupboard().lower() == "indian":
             mini=1
         else:
             mini=2
-        temp=move()
-        loc=moving(temp[0],temp[1])
-    elif loc == [1,6]:
+        hi=direction()
+        yo=move(final_move(hi))
+        temp=moving(yo)
+        loc=temp
+
+    elif loc == (1,6):
         l=True
-        u=r=d=False
+        u=False
+        r=False
+        d=False
         stuck+=1
         print("You enter a room with purple walls. There is a wardrobe with the door cracked open\
-         that peaks your interest.")
+ that peaks your interest.")
         stuck+=wardrobe()
-        temp=move()
-        loc=moving(temp[0],temp[1])
-    elif loc == [2,5]:
-        l=
+        hi=direction()
+        yo=move(hi)
+        temp=moving(yo)
+        loc=temp
+
+    elif loc == (2,5):
+        l=False
+        u=False
+        d=True
+        r=True
+        stuck+=1
+        print("You enter a room with green walls. There is an exit sign above the door in the \"up\"\
+ direction. There is also a door \"down\" and to the \"right\".")
+        hi=direction()
+        
+        yo=move(hi)
+        temp=moving(yo)
+        loc=temp
+
+    elif loc == (2,6):
+        l=True
+        u=False
+        d=False
+        r=False
+        stuck+=1
+        print("You enter an orange room. There is nothing but a miniature mouse hole in the wall.\
+ If only you had a little person to go investigate the hole.")
+        if key==False:
+            key=True
+            if mini==1:
+                print("The indian jumps down and into the hole and emerges with a key shortly after.")
+                
+            elif mini==2:
+                print("Owen Wilson looks at the hole. He is clearly terrified. After a long while\
+    and some encouragement from you he goes into the hole. After some screaming and \
+    a panic attack he emerges with a key.")
+                stuck+=1
+        hi=direction()
+        yo=move(hi)
+        temp=moving(yo)
+        loc=temp
+

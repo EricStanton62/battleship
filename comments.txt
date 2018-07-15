@@ -1,0 +1,87 @@
+hi does this work? 
+print(""" i can print oodles of lines with triple quotes""")    #prints everything between the triple quotes
+modules using import
+import greet
+greet.sayHello('Tim')   #uses the sayHello function from greet
+from greet import sayGoodbye
+greet.sayGoodbye('Bob')   #imported only sayGoodbye from greet then works.
+
+#open a file
+fo= open(text.txt', 'w')
+#get some info
+print('Name:',fo.name)    #prints Name text.txt
+print('Is Closed:',fo.closed)   #prints Is Closed False
+print('Opening Mode:',fo.mode)   #prints w
+fo.write('I love Python')
+fo.write(' and Javascript')           #overwrites anything initially in the text.txt then writes continually until you close it without overwriting anymore.
+fo.close()
+
+fo= open('text.txt', 'a')          #opens text.txt in append mode so the first
+fo.write('I also like PHP')     #write doesn't delete the entire file again
+fo.close()
+
+fo=open('text.txt', 'r+')
+text=fo.read()      #if we put 10 in the () it only reads first 10 characters
+print(text)
+fo.close()
+
+fo=open('text2.txt','w+')    #adds the file if it doesn't exist with w+
+fo.write('This is my new file')
+fo.close()   
+
+class Person:
+	__name = ''
+	__email = ''
+
+	def __init__(self, name, email):
+		self.__name=name
+		self.__email=email
+
+	def set_name(self, name):
+		self.__name=name
+
+	def get_name(self):
+		return self.__name
+
+	def set_email(self, email):
+		self.__email = email
+
+	def get_email(self):
+		return self.__email
+
+	def toString(self):
+		return '{} can be contacted at {}'.format(self.__name,self.__email)
+
+brad=Person('Brad", "brad@gmail.com")
+#brad.set_name('Brad Traversy')
+#brad.set_email('brad@gmail.com')
+
+print(brad.get_name())     #prints the name   , but can't do  brad.__name
+print(brad.toString())      #prints brad can be contacted at brad@gmail.com
+
+class Customer(Person):
+	__balance=0
+
+	def __init__(self,name, email,balance):
+		self.__name=name
+		self.__email=email
+		self.__balance=balance
+		super(Customer,self).__init__(name,email)    #so passing in name and email from  the person object
+
+	def set_balance(self, balance):
+		self.__balance=balance
+
+	def get_balance(self):
+		return self.__balance
+
+	def toString(self):
+		return '{} has a balance of{} and can be contacted at {}'.format(self.__name,self.__balance,self.__email)
+
+
+john=Customer("John",john@gmail.com,100)
+
+john.set_balance(400)
+print (john.toString())
+
+kate = customer("Kate", kate@gmail.com,500)
+print(kate.toString())

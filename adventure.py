@@ -72,10 +72,10 @@ key = False
 while stuck<12:
 #initializing values for turn 1 (stuck 0)
     if stuck==0:
-        print("while following your soccer coach down the stairs into an underground building\
- a large boulder fell and blocked the entrance, you will need to find another exit. You might be\
- dreaming, you see yourself from above. You don't know where the rest of the team is. You have\
- enough oxygen to enter 10 rooms until you pass out.")
+        print("""while following your soccer coach down the stairs into an underground building
+a large boulder fell and blocked the entrance, you will need to find another exit. You might be
+dreaming, you see yourself from above. You don't know where the rest of the team is. You have
+enough oxygen to enter 10 rooms until you pass out.""")
         temp=[]
         hi=""
         yo=""
@@ -105,9 +105,10 @@ while stuck<12:
         r=True
         d=False
         stuck+=1
-        print("You are in a room with white walls. There is an old receptionist desk in the\
- middle of the room with nothing of value on it or in it. There are however three doors.\
- One door \"up\", one door \"left\", and one door \"right\".")
+        print("You are in a room with white walls.")
+        print("There are doors \"up\", \"left\",and \"right\".")
+        print("""There is an old receptionist desk in the middle of the room with nothing
+of value on it or in it.""")
         hi=direction()
         yo=move(hi)
         temp=moving(yo)
@@ -119,11 +120,12 @@ while stuck<12:
         l=False
         d=False
         stuck+=1
-        print("You enter a room with pink walls. There is a door only on the \"right\"")
+        print("You enter a room with pink walls.")
+        print("There is a door only on the \"right\"")
         if mini==5:
-            print("There is a cupboard that perks your interest. Little people appear to be\
- fighting. You notice one of them is Owen Wilson and the other is just some indian. You don't\
-  want them to fight anymore so you take one of them. Which do you want to take?")
+            print("""There is a cupboard that perks your interest. Little people appear to be fighting.
+You notice one of them is Owen Wilson and the other is just some indian. You don't want
+them to fight anymore so you take one of them. Which do you want to take?""")
             if cupboard().lower() == "indian":
                 print("You grab the indian.")
                 mini=1
@@ -141,8 +143,9 @@ while stuck<12:
         r=False
         d=False
         stuck+=1
-        print("You enter a room with purple walls. There is a wardrobe with the door cracked open\
- that peaks your interest.")
+        print("You enter a room with purple walls.")
+        print("There is a door only on the \"left\")
+        print("There is a wardrobe with the door cracked open that peaks your interest.")
         stuck+=wardrobe()
         hi=direction()
         yo=move(hi)
@@ -155,8 +158,9 @@ while stuck<12:
         d=True
         r=True
         stuck+=1
-        print("You enter a room with green walls. There is an exit sign above the door in the \"up\"\
- direction. There is also a door \"down\" and to the \"right\".")
+        print("You enter a room with green walls.")
+        print("There are doors \"up\", \"down\", and \"right\".")
+        print("There is an exit sign above the door in the \"up\" direction.")
         hi=direction()
         if hi =="up":
             if key==True:
@@ -164,8 +168,8 @@ while stuck<12:
                 break
             else:
                 if mini==1:
-                    print("you try to open the door. It is locked. You try to knock\
-    it down the door by charging at it and fail. The indian laughs.")
+                    print("""you try to open the door. It is locked. You try to knock
+    it down by charging at it and fall. The indian is not amused.""")
                 elif mini==2:
                     print("you try to open the door. It is locked. Owen Wilson laughs.")
                 else:
@@ -181,17 +185,19 @@ while stuck<12:
         d=False
         r=False
         stuck+=1
-        print("You enter an orange room. There is nothing but a miniature mouse hole in the wall.\
- If only you had a little person to go investigate the hole.")
+        print("You enter an orange room.")
+        print("There is only a door on the \"left\".")
+        print("""There is nothing but a miniature mouse hole in the wall.
+If only you had a little person to go investigate the hole.""")
         if key==False:
             if mini==1:
                 print("The indian jumps down and into the hole and emerges with a key shortly after.")
                 key=True
             elif mini==2:
                 key=True
-                print("Owen Wilson looks at the hole. He is clearly terrified. After a long while\
- and some encouragement from you he goes into the hole. After some screaming and \
-a panic attack he emerges with a key.")
+                print("""Owen Wilson looks at the hole. He is clearly terrified. After a long while
+and some encouragement from you he goes into the hole. After some screaming and
+a panic attack he emerges with a key.""")
                 stuck+=1
         hi=direction()
         yo=move(hi)

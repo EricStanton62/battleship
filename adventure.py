@@ -60,18 +60,56 @@ def moving(mov):
         x=loc[1]
     return (y,x)
 
+class room:
+    """This is my attempt to use a class for each room"""
+    __loc=()
+    __color=''
+    __description=''
+    __up=True
+    __down=False
+    __left=True
+    __right=True
+
+    def __init__(self,loc,color,description,up,down,left,right):
+        self.__loc=loc
+        self.__color=color
+        self.__description=description
+        self.__up=up
+        self.__down=down
+        self.__left=left
+        self.__right=right
+
+    def get_color(self):
+        return self.__color
+
+#hopefully this prints only the correct directions when true.
+    def direction(self):
+        directions=[self.__up,self.__down,self.__left,self.__right]
+        print("There is a door", end='')
+        if directions[0]==True:
+            print(" \"up\"", end='')
+        if directions[1]==True:
+            print(" \"down\"", end='')
+        if directions[2]==True:
+            print(" \"left\"", end='') 
+        if directions[3]==True:
+            print(" \"right\"", end='')
+        print(".")
+
+
+
 #set-up
 temp=[]
 hi=""
 yo=""
 loc=(1,5)
-stuck=0
+turn=0
 mini=5
 key = False
 
-while stuck<12:
-#initializing values for turn 1 (stuck 0)
-    if stuck==0:
+while turn<12:
+#initializing values for turn 1 (turn 0)
+    if turn==0:
         print("""while following your soccer coach down the stairs into an underground building
 a large boulder fell and blocked the entrance, you will need to find another exit. You might be
 dreaming, you see yourself from above. You don't know where the rest of the team is. You have
@@ -85,12 +123,12 @@ enough oxygen to enter 10 rooms until you pass out.""")
     print (loc)
 
 #if you run out of time
-    if stuck==10:
+    if turn==10:
         print ("you have run out of oxygen and died.")
         hi= input("care to play again(y/n)?")
         try:
             if hi.lower()=="y" or hi.lower()=="yes":
-                stuck=0
+                turn=0
                 continue
         except (TypeError, ValueError):
             break
@@ -104,7 +142,7 @@ enough oxygen to enter 10 rooms until you pass out.""")
         l=True
         r=True
         d=False
-        stuck+=1
+        turn+=1
         print("You are in a room with white walls.")
         print("There are doors \"up\", \"left\",and \"right\".")
         print("""There is an old receptionist desk in the middle of the room with nothing
@@ -119,9 +157,9 @@ of value on it or in it.""")
         u=False
         l=False
         d=False
-        stuck+=1
+        turn+=1
         print("You enter a room with pink walls.")
-        print("There is a door only on the \"right\"")
+        print("There is a door only on the \"right\".")
         if mini==5:
             print("""There is a cupboard that perks your interest. Little people appear to be fighting.
 You notice one of them is Owen Wilson and the other is just some indian. You don't want
@@ -142,11 +180,11 @@ them to fight anymore so you take one of them. Which do you want to take?""")
         u=False
         r=False
         d=False
-        stuck+=1
+        turn+=1
         print("You enter a room with purple walls.")
-        print("There is a door only on the \"left\")
+        print("There is a door only on the \"left\".")
         print("There is a wardrobe with the door cracked open that peaks your interest.")
-        stuck+=wardrobe()
+        turn+=wardrobe()
         hi=direction()
         yo=move(hi)
         temp=moving(yo)
@@ -157,7 +195,7 @@ them to fight anymore so you take one of them. Which do you want to take?""")
         u=False
         d=True
         r=True
-        stuck+=1
+        turn+=1
         print("You enter a room with green walls.")
         print("There are doors \"up\", \"down\", and \"right\".")
         print("There is an exit sign above the door in the \"up\" direction.")
@@ -184,7 +222,7 @@ them to fight anymore so you take one of them. Which do you want to take?""")
         u=False
         d=False
         r=False
-        stuck+=1
+        turn+=1
         print("You enter an orange room.")
         print("There is only a door on the \"left\".")
         print("""There is nothing but a miniature mouse hole in the wall.
@@ -198,7 +236,7 @@ If only you had a little person to go investigate the hole.""")
                 print("""Owen Wilson looks at the hole. He is clearly terrified. After a long while
 and some encouragement from you he goes into the hole. After some screaming and
 a panic attack he emerges with a key.""")
-                stuck+=1
+                turn+=1
         hi=direction()
         yo=move(hi)
         temp=moving(yo)

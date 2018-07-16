@@ -85,3 +85,6 @@ print (john.toString())
 
 kate = customer("Kate", kate@gmail.com,500)
 print(kate.toString())
+
+used command line to move a jpeg
+mv ~/desktop/hangman.jpeg ~/documents/dev/battleship   and it worked, yay
